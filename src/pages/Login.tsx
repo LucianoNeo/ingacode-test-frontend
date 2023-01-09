@@ -10,7 +10,7 @@ function Login() {
       <div className="flex flex-col p-2 gap-3">
         <span>Seja bem vindo ao</span>
         <div className="translate-y-[-15px]">
-          <Logo />
+          <Logo size="5xl" />
         </div>
         <p className="italic max-w-xs text-sm">Um sistema para gerenciamento de tarefas simplificado: rastreie o tempo gasto, atribua tarefas a colaboradores, adicione e remova projetos e tarefas facilmente"</p>
         <img
