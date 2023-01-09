@@ -1,9 +1,12 @@
+import Logo from "../components/Logo"
 
-function App() {
+function Home() {
 
   return (
-    <div className="bg-slate-800 text-white w-full">Iniciando</div>
+    <header className="bg-slate-800 text-white w-full">
+      <Logo />
+    </header>
   )
 }
 
-export default App
+export default Home

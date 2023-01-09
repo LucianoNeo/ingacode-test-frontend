@@ -1,8 +1,10 @@
+import Home from "./pages/Home"
+import Login from "./pages/Login"
 
 function App() {
 
   return (
-    <div className="bg-slate-800 text-white w-full">Iniciando</div>
+    <Home />
   )
 }
 
