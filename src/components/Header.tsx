@@ -14,7 +14,7 @@ function Header({ username, close, setClose }: Iprops) {
 
     return (
         <>
-            <header className="bg-gray-900 text-white w-[102%] md:w-full h-14 p-1 flex items-center justify-between">
+            <header className="bg-gray-900 text-white w-[100%] md:w-full h-14 p-1 flex items-center justify-between">
                 <div className="flex  gap-4">
                     <button
                         className="transition-all text-bold"

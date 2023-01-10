@@ -1,22 +1,28 @@
-import { IoMdAddCircle } from "react-icons/io"
-import { BiTask, BiTime } from 'react-icons/bi'
+import { AiFillDelete } from 'react-icons/ai'
+import { BiEdit, BiTask } from 'react-icons/bi'
 import TimeTracker from "./TimeTracker"
 interface Iprops {
     name: string
     description: string
     project: string
-    collaborator: string
+    collaborator?: string
 
 }
 
 function TaskCard({ name, project, collaborator, description }: Iprops) {
     return (
-        <div className="flex flex-col justify-center flex-wrap p-4 mx-auto gap-4">
-            <div className="bg-slate-800 w-[75vw] md:w-96 rounded-xl flex p-4 justify-evenly items-center overflow-hidden">
+        <div className="flex flex-col flex-wrap p-4 mx-auto h-[84vh] gap-4">
+            <div className="bg-slate-800 w-[75vw] md:w-96 rounded-xl flex p-4 justify-evenly items-center overflow-hidden relative">
+                <button className="absolute right-12 top-4 hover:text-orange-600">
+                    <BiEdit size={20} />
+                </button>
+                <button className="absolute right-4 top-4 hover:text-red-600">
+                    <AiFillDelete size={20} />
+                </button>
                 <div className="flex items-center gap-4">
 
                     <div className='flex flex-col overflow-hidden'>
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between mt-6">
                             <BiTask size={48} />
                             <span className="font-extrabold uppercase text-xl text-start">{name}</span>
                         </div>
@@ -24,23 +30,26 @@ function TaskCard({ name, project, collaborator, description }: Iprops) {
                             <p className='font-bold'>Projeto:</p>
                             <p>{project}</p>
                         </div>
-                        <div className='flex gap-1 text-start mt-4 text-xs flex-col'>
-                            <p className='font-bold'>Colaborador:</p>
-                            <div className="bg-[#0C0B10] w-20 text-center p-1 rounded">
-                                <p>{collaborator}</p>
-                            </div>
-                        </div>
                         <div className='flex gap-1 flex-col text-start mt-4'>
                             <p className='text-xs font-bold'>Descrição:</p>
                             <div
-                                className="bg-slate-800 text-xs w-[100%] h-20 overflow-auto">
+                                className="bg-slate-800 text-xs w-[100%] h-10 overflow-auto">
                                 {description}
                             </div>
                         </div>
                         <div>
-                            <p className="text-xs text-start mt-2 font-bold ">TimeTrackers:</p>
-                            <div className="flex gap-2  pb-2 overflow-auto">
+                            <div className="flex items-center gap-4 h-5">
+                                <p className="text-xs text-start mt-2 font-bold ">TimeTrackers:</p>
+                                <button className="bg-orange-500 rounded-full w-5 h-5 hover:opacity-80 flex items-center justify-center translate-y-1">
+                                    +
+                                </button>
+
+                            </div>
+                            <div className="flex gap-2 w-[70vw] md:w-80 pb-2 overflow-auto px-2 items-center">
                                 <TimeTracker />
+                                <TimeTracker collaborator="Luciano" />
+                                <TimeTracker />
+
                             </div>
                         </div>
                     </div>
