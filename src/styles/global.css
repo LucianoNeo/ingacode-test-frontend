@@ -2,8 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+
+    
+
+
 body{
     color: white;
     background-color: #0C0B10;
     font-family: 'Poppins';
+}
+
+*::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #121214;
+    border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #1a1a1c;
+    border-radius: 10px;
+    border: 2px solid #DE8F45;
+
 }

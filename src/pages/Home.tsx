@@ -11,14 +11,14 @@ function Home() {
   const [close, setClose] = useState(false)
   const [page, setPage] = useState('dashboard')
   return (
-    <>
+    <div className="overflow-x-hidden overflow-y-hidden">
       <Header close={close} setClose={setClose} username={username} />
       <Menu open={close} setPage={setPage} setClose={setClose} close={close} />
       {page == 'dashboard' && <Dashboard setPage={setPage} />}
       {page == 'projects' && <Projects />}
       {page == 'tasks' && <Tasks />}
       {page == 'collaborators' && <Collaborators />}
-    </>
+    </div>
   )
 }
 

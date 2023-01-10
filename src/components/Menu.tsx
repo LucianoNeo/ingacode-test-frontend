@@ -11,7 +11,7 @@ interface Iprops {
 function Menu({ open, setPage, setClose }: Iprops) {
 
     return (
-        <nav className={`flex flex-col w-52 h-[100vh] font-bold bg-orange-500 rounded-sm p-1  absolute transition-all 
+        <nav className={`flex flex-col w-52 h-[95vh] md:h-[88vh] font-bold bg-orange-500 rounded-sm px-1  absolute transition-all 
         ${open ? 'left-0' : 'left-[-170px]'}`}>
             <ul className='flex flex-col gap-4 py-4 overflow-hidden p-1'>
                 <li

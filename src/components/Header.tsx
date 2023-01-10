@@ -14,7 +14,7 @@ function Header({ username, close, setClose }: Iprops) {
 
     return (
         <>
-            <header className="bg-gray-900 text-white w-full h-14 p-1 flex items-center justify-between">
+            <header className="bg-gray-900 text-white w-[102%] md:w-full h-14 p-1 flex items-center justify-between">
                 <div className="flex  gap-4">
                     <button
                         className="transition-all text-bold"
@@ -26,9 +26,9 @@ function Header({ username, close, setClose }: Iprops) {
                                 <GiHamburgerMenu size={26} />
                         }
                     </button>
-                    <Logo size='3xl' />
+                    <Logo size='text-[22px] md:text-[24px]' />
                 </div>
-                <div className="flex items-start justify-start gap-4">
+                <div className="flex items-start justify-start gap-2">
                     <AiOutlineUser size={26} />
                     <span className="text-lg">Olá, {username}!</span>
                     <button className="text-red">

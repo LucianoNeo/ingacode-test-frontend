@@ -8,7 +8,7 @@ function Dashboard({ setPage }: Iprops) {
 
     return (
         <>
-            <main className="text-white flex h-screen flex-col w-[90%] md:w-[80%] text-end px-4 ml-10 md:mx-auto overflow-auto pb-10">
+            <main className="text-white flex h-[90vh] flex-col w-[90%] md:w-[80%] text-end px-4 ml-10 md:mx-auto overflow-auto pb-10">
                 <div className="flex bg-gradient-to-r from-orange-400 to-orange-600 h-20 mt-4 px-4 rounded justify-end items-start pt-4">
                     <h1 className="text-xl md:text-3xl font-extrabold">DASHBOARD</h1>
                 </div>
