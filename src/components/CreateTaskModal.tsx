@@ -2,9 +2,9 @@ import { Resolver, useForm, Controller } from 'react-hook-form';
 import { api } from '../services/Api';
 import { useMyContext } from '../contexts/MyContext';
 import { BiTask } from 'react-icons/bi';
-import * as moment_ from 'moment';
+import { format, parseISO, isBefore, isAfter } from 'date-fns';
 
-const moment: any = moment_;
+
 
 interface FormData {
     name: string;
@@ -114,27 +114,27 @@ export default function CreateTaskModal({ visible, close }: Iprops) {
         try {
             const currentDate = new Date()
 
-            const parsedstartDate = moment(String(data.startDate), "YYYY-MM-DD HH:mm:ss").toDate();
-            const parsedendDate = moment(data.endDate, "YYYY-MM-DD HH:mm:ss").toDate();
-            const parsedCurrentDate = moment(currentDate).format("YYYY-MM-DD HH:mm:ss")
-            const now = moment(parsedCurrentDate, "YYYY-MM-DD HH:mm:ss").toDate();
+            const parsedstartDate = parseISO(String(data.startDate));
+            const parsedendDate = parseISO(String(data.endDate));
+            const parsedCurrentDate = format(currentDate, "yyyy-MM-dd HH:mm:ss");
+            const now = parseISO(parsedCurrentDate);
 
-            if (parsedstartDate.getTime() > parsedendDate.getTime()) {
+            if (isAfter(parsedstartDate, parsedendDate)) {
                 return setError("startDate", { type: "custom", message: 'O início da tarefa deve ser MENOR que o Fim' });
             }
 
-            if (parsedstartDate < now) {
+            if (isBefore(parsedstartDate, now)) {
                 return setError("startDate", { type: "custom", message: 'Inicio não pode ser menor que a data atual!' });
             }
             if (data.startDate === "") {
                 data.startDate = undefined;
             } else {
-                data.startDate = moment(String(data.startDate)).toISOString();
+                data.startDate = format(parsedstartDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
             }
             if (data.endDate === "") {
                 data.endDate = undefined;
             } else {
-                data.endDate = moment(data.endDate).toISOString();
+                data.endDate = format(parsedendDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
             }
             if (data.collaboratorId === "Escolha o Colaborador") {
                 data.collaboratorId = null;
@@ -142,11 +142,12 @@ export default function CreateTaskModal({ visible, close }: Iprops) {
 
             createTask(data)
 
-
         } catch (error) {
-            alert(error)
+            console.log(error)
         }
     };
+
+
     return (
         <div className={`${!visible && 'hidden'} w-screen h-screen bg-black bg-opacity-80 backdrop:blur-3xl flex items-center justify-center z-50 absolute top-0 left-0`}>
             <div className="bg-slate-900 w-[90vw] md:w-[40vw] min-w-[350px] px-8 py-2 rounded-md justify-between flex flex-col">
