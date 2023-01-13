@@ -1,4 +1,3 @@
-import { IoMdAddCircle } from "react-icons/io"
 
 interface Iprops {
     username: string | null

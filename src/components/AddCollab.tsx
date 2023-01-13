@@ -1,4 +1,4 @@
-import { Resolver, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useMyContext } from '../contexts/MyContext';
 import { api } from '../services/Api';
 

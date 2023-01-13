@@ -11,7 +11,7 @@ interface Iprops {
 }
 
 export default function DeleteTTModal({ visible, close, id }: Iprops) {
-    const { token, setTasks, setIsLoading } = useMyContext()
+    const { token, setTasks, setIsLoading, setProjects, setDayMinutes, setMonthMinutes } = useMyContext()
 
 
     async function deleteTT() {
@@ -19,9 +19,22 @@ export default function DeleteTTModal({ visible, close, id }: Iprops) {
             setIsLoading(true)
             const response = await api.delete(`/timetrackers/${id}`)
             console.log(response.data)
-            const update = await api.get('/tasks')
-            setTasks(update.data)
-            setIsLoading(false)
+            const updateTasks = await api.get('/tasks')
+            setTasks(updateTasks.data)
+
+            const updateProjects = await api.get('/projects')
+            setProjects(updateProjects.data)
+
+            const updateDayMinutes = await api.post('/daytotalminutes', { daySent: new Date() })
+            setDayMinutes(updateDayMinutes.data)
+
+            const updateMonthMinutes = await api.get('/monthtotalminutes')
+            setMonthMinutes(updateMonthMinutes.data)
+
+            if (updateTasks.data) {
+                setIsLoading(false)
+                close();
+            }
         } catch (error) {
             setIsLoading(false)
         }

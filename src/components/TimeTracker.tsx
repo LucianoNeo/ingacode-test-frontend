@@ -23,7 +23,7 @@ function TimeTracker({ collaborator, endDate, startDate, id, number }: Iprops) {
     const [deleteTTVisible, setdeleteTTVisible] = useState(false)
     const [addCollabVisible, setaddCollabVisible] = useState(false)
 
-    const { setTasks, token, setIsLoading } = useMyContext()
+    const { setTasks, setProjects, setIsLoading, setDayMinutes, setMonthMinutes } = useMyContext()
 
     function closeModal() {
         setdeleteTTVisible(false)
@@ -59,9 +59,23 @@ function TimeTracker({ collaborator, endDate, startDate, id, number }: Iprops) {
                 setIsLoading(true)
                 const response = await api.put(`/timetrackers/${id}`, { endDate: endDate })
                 console.log(response.data)
-                const update = await api.get('/tasks')
-                setTasks(update.data)
-                setIsLoading(false)
+
+                const updateTasks = await api.get('/tasks')
+                setTasks(updateTasks.data)
+
+                const updateProjects = await api.get('/projects')
+                setProjects(updateProjects.data)
+
+                const updateDayMinutes = await api.post('/daytotalminutes', { daySent: new Date() })
+                setDayMinutes(updateDayMinutes.data)
+
+                const updateMonthMinutes = await api.get('/monthtotalminutes')
+                setMonthMinutes(updateMonthMinutes.data)
+
+                if (updateTasks.data) {
+                    setIsLoading(false)
+                    close();
+                }
             }
         } catch (error) {
             console.log(error);

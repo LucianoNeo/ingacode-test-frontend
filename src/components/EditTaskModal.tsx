@@ -78,13 +78,16 @@ export default function EditTaskModal({ visible, close, name, id, projectId, des
             const updateProjects = await api.get('/projects')
             setProjects(updateProjects.data)
 
-            const updateDayMinutes = await api.get('/daytotalminutes')
+            const updateDayMinutes = await api.post('/daytotalminutes', { daySent: new Date() })
             setDayMinutes(updateDayMinutes.data)
 
             const updateMonthMinutes = await api.get('/monthtotalminutes')
-            setMonthMinutes(updateProjects.data)
+            setMonthMinutes(updateMonthMinutes.data)
 
-            setIsLoading(false)
+            if (updateTasks.data) {
+                setIsLoading(false)
+                close();
+            }
         } catch (error: any) {
             setIsLoading(false)
             return setError("endDate", { type: "custom", message: error.response.data.error });

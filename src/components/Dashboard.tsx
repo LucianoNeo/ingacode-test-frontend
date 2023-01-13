@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { useMyContext } from "../contexts/MyContext"
 
 interface Iprops {

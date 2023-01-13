@@ -10,7 +10,7 @@ interface Iprops {
 }
 
 export default function DeleteTaskModal({ visible, close, id, name }: Iprops) {
-    const { setProjects, setTasks, setIsLoading } = useMyContext()
+    const { setProjects, setTasks, setIsLoading, setDayMinutes, setMonthMinutes } = useMyContext()
 
     async function deleteTask() {
 
@@ -18,11 +18,23 @@ export default function DeleteTaskModal({ visible, close, id, name }: Iprops) {
             setIsLoading(true)
             const response = await api.delete(`/tasks/${id}`)
             console.log(response.data)
+
             const updateTasks = await api.get('/tasks')
             setTasks(updateTasks.data)
+
             const updateProjects = await api.get('/projects')
             setProjects(updateProjects.data)
-            setIsLoading(false)
+
+            const updateDayMinutes = await api.post('/daytotalminutes', { daySent: new Date() })
+            setDayMinutes(updateDayMinutes.data)
+
+            const updateMonthMinutes = await api.get('/monthtotalminutes')
+            setMonthMinutes(updateMonthMinutes.data)
+
+            if (updateTasks.data) {
+                setIsLoading(false)
+                close();
+            }
         } catch (error) {
             console.log(error)
             setIsLoading(false)
