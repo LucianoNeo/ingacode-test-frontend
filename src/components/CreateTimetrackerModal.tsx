@@ -4,7 +4,7 @@ import { useMyContext } from '../contexts/MyContext';
 import { api } from '../services/Api';
 import * as moment_ from 'moment';
 
-const convertTime = moment_;
+const moment: any = moment_;
 
 interface FormData {
     startDate?: string | undefined
@@ -84,10 +84,10 @@ export default function CreateTimetrackerModal({ visible, close, id }: Iprops) {
         try {
             const currentDate = new Date()
             data.taskId = id
-            const parsedstartDate = convertTime(data.startDate, "YYYY-MM-DD HH:mm:ss").toDate();
-            const parsedendDate = convertTime(data.endDate, "YYYY-MM-DD HH:mm:ss").toDate();
-            const parsedCurrentDate = convertTime(currentDate).format("YYYY-MM-DD HH:mm:ss")
-            const now = convertTime(parsedCurrentDate, "YYYY-MM-DD HH:mm:ss").toDate();
+            const parsedstartDate = moment(data.startDate, "YYYY-MM-DD HH:mm:ss").toDate();
+            const parsedendDate = moment(data.endDate, "YYYY-MM-DD HH:mm:ss").toDate();
+            const parsedCurrentDate = moment(currentDate).format("YYYY-MM-DD HH:mm:ss")
+            const now = moment(parsedCurrentDate, "YYYY-MM-DD HH:mm:ss").toDate();
 
             if (parsedstartDate.getTime() > parsedendDate.getTime()) {
                 return setError("startDate", { type: "custom", message: 'O início da tarefa deve ser MENOR que o Fim' });
@@ -99,12 +99,12 @@ export default function CreateTimetrackerModal({ visible, close, id }: Iprops) {
             if (data.startDate === "") {
                 data.startDate = undefined;
             } else {
-                data.startDate = convertTime(data.startDate).toISOString();
+                data.startDate = moment(data.startDate).toISOString();
             }
             if (data.endDate === "") {
                 data.endDate = undefined;
             } else {
-                data.endDate = convertTime(data.endDate).toISOString();
+                data.endDate = moment(data.endDate).toISOString();
             }
             if (data.collaboratorId === "Escolha o Colaborador") {
                 data.collaboratorId = null;

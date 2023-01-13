@@ -4,7 +4,7 @@ import { useMyContext } from '../contexts/MyContext';
 import { BiTask } from 'react-icons/bi';
 import * as moment_ from 'moment';
 
-const moment = moment_;
+const moment: any = moment_;
 
 interface FormData {
     name: string;

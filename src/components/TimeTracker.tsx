@@ -9,7 +9,7 @@ import { formatDate } from '../tools/formatDate'
 import AddCollab from './AddCollab'
 import DeleteTTModal from './DeleteTTModal'
 
-const moment = moment_;
+const moment: any = moment_;
 
 
 interface Iprops {
