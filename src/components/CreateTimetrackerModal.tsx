@@ -2,9 +2,10 @@
 import { useForm } from 'react-hook-form';
 import { useMyContext } from '../contexts/MyContext';
 import { api } from '../services/Api';
-import * as moment_ from 'moment';
 
-const moment: any = moment_;
+import { format, parseISO, isBefore, isAfter } from 'date-fns';
+
+
 
 interface FormData {
     startDate?: string | undefined
@@ -80,31 +81,32 @@ export default function CreateTimetrackerModal({ visible, close, id }: Iprops) {
         reset({ collaboratorId: 'Escolha o Colaborador', startDate: '', endDate: '' })
     }
 
+
     const onSubmit = (data: FormData) => {
         try {
             const currentDate = new Date()
             data.taskId = id
-            const parsedstartDate = moment(data.startDate, "YYYY-MM-DD HH:mm:ss").toDate();
-            const parsedendDate = moment(data.endDate, "YYYY-MM-DD HH:mm:ss").toDate();
-            const parsedCurrentDate = moment(currentDate).format("YYYY-MM-DD HH:mm:ss")
-            const now = moment(parsedCurrentDate, "YYYY-MM-DD HH:mm:ss").toDate();
+            const parsedstartDate = parseISO(String(data.startDate));
+            const parsedendDate = parseISO(String(data.endDate));
+            const parsedCurrentDate = format(currentDate, "yyyy-MM-dd HH:mm:ss");
+            const now = parseISO(parsedCurrentDate);
 
-            if (parsedstartDate.getTime() > parsedendDate.getTime()) {
+            if (isAfter(parsedstartDate, parsedendDate)) {
                 return setError("startDate", { type: "custom", message: 'O início da tarefa deve ser MENOR que o Fim' });
             }
 
-            if (parsedstartDate < now) {
+            if (isBefore(parsedstartDate, now)) {
                 return setError("startDate", { type: "custom", message: 'Inicio não pode ser menor que a data atual!' });
             }
             if (data.startDate === "") {
                 data.startDate = undefined;
             } else {
-                data.startDate = moment(data.startDate).toISOString();
+                data.startDate = format(parsedstartDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
             }
             if (data.endDate === "") {
                 data.endDate = undefined;
             } else {
-                data.endDate = moment(data.endDate).toISOString();
+                data.endDate = format(parsedendDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
             }
             if (data.collaboratorId === "Escolha o Colaborador") {
                 data.collaboratorId = null;
@@ -116,6 +118,7 @@ export default function CreateTimetrackerModal({ visible, close, id }: Iprops) {
             console.log(error)
         }
     };
+
     return (
         <div className={`${!visible && 'hidden'} w-screen h-screen bg-black bg-opacity-80 backdrop:blur-3xl flex items-center justify-center z-50 absolute top-0 left-0`}>
             <div className="bg-slate-900 w-[90vw] md:w-[30vw] min-w-[350px] px-8 py-8 rounded-md justify-between flex flex-col text-left">
