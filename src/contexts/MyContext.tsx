@@ -18,7 +18,15 @@ interface ContextData {
     tasks: [] | null
     isLoading: boolean
     setIsLoading: Function
-    collaborators: [] | null
+    collaborators: [
+        colab: {
+            value: string | null
+            id: string | null
+            key: string | null
+            name: string | null
+        }
+
+    ] | null
     setCollaborators: Function
     filterBy: string
     setFilterBy: Function

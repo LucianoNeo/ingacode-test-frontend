@@ -11,7 +11,7 @@ function Login() {
   const { signIn, authenticated, error, setError, activeButton, setActiveButton } = useContext(AuthContext);
 
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (username == '') {
       return setError('O usuário é obrigatório!')

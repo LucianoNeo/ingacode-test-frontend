@@ -5,8 +5,8 @@ interface Iprops {
 
     visible: boolean
     close: Function
-    name: string
-    id: string
+    name: String
+    id: String
 }
 
 export default function DeleteTaskModal({ visible, close, id, name }: Iprops) {

@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { JsxElement } from "typescript";
 import { api } from "../services/Api";
@@ -9,7 +9,7 @@ import { User } from '../types/User';
 
 type AuthContextType = {
     user: string | null;
-    signIn: (username: string, password: string) => Promise<boolean>;
+    signIn: Function
     signOut: () => void;
     setError: Function
     authenticated: boolean
@@ -21,7 +21,7 @@ type AuthContextType = {
 
 export const AuthContext = createContext<AuthContextType>(null!);
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null)
     const [token, setToken] = useState<string | null>(null)

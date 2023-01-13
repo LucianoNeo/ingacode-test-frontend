@@ -11,12 +11,12 @@ interface Iprops {
 
     visible: boolean
     close: Function
-    name: string
+
     id: string
 }
 
-export default function AddCollab({ visible, close, name, id }: Iprops) {
-    const { setError, register, handleSubmit, reset, formState: { errors } } = useForm<FormData>();
+export default function AddCollab({ visible, close, id }: Iprops) {
+    const { setError, register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const { setTasks, setIsLoading, collaborators } = useMyContext()
 
     async function addCollab(data: FormData, id: string) {
@@ -55,7 +55,7 @@ export default function AddCollab({ visible, close, name, id }: Iprops) {
                             className="px-4 py-2 rounded bg-black w-full mt-8"
                             {...register("collaboratorId")} >
                             {collaborators!.map((colab) => (
-                                <option key={colab.id} value={colab.id}>
+                                <option key={colab.id} value={String(colab.id)}>
                                     {colab.name}
                                 </option>
                             ))}

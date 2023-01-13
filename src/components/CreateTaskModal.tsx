@@ -9,7 +9,7 @@ interface FormData {
     name: string;
     description: string
     projectId: string
-    startDate?: string | undefined
+    startDate?: String | undefined
     endDate?: string | undefined
     collaboratorId?: string | null
 }
@@ -59,10 +59,10 @@ export default function CreateTaskModal({ visible, close }: Iprops) {
     async function createTask(data: FormData) {
         let interval
         if (data.startDate && data.endDate) {
-            interval = (new Date(data.endDate).getTime() - new Date(data.startDate).getTime()) / 60000;
+            interval = (new Date(data.endDate).getTime() - new Date(String(data.startDate)).getTime()) / 60000;
             console.log(interval)
         }
-        const checkDay = await api.post('/daytotalminutes', { daySent: new Date(data.startDate) })
+        const checkDay = await api.post('/daytotalminutes', { daySent: new Date(String(data.startDate)) })
         const currentDayHours = checkDay.data
         try {
             console.log(currentDayHours)
@@ -113,7 +113,7 @@ export default function CreateTaskModal({ visible, close }: Iprops) {
         try {
             const currentDate = new Date()
 
-            const parsedstartDate = moment(data.startDate, "YYYY-MM-DD HH:mm:ss").toDate();
+            const parsedstartDate = moment(String(data.startDate), "YYYY-MM-DD HH:mm:ss").toDate();
             const parsedendDate = moment(data.endDate, "YYYY-MM-DD HH:mm:ss").toDate();
             const parsedCurrentDate = moment(currentDate).format("YYYY-MM-DD HH:mm:ss")
             const now = moment(parsedCurrentDate, "YYYY-MM-DD HH:mm:ss").toDate();
@@ -128,7 +128,7 @@ export default function CreateTaskModal({ visible, close }: Iprops) {
             if (data.startDate === "") {
                 data.startDate = undefined;
             } else {
-                data.startDate = moment(data.startDate).toISOString();
+                data.startDate = moment(String(data.startDate)).toISOString();
             }
             if (data.endDate === "") {
                 data.endDate = undefined;
@@ -196,9 +196,9 @@ export default function CreateTaskModal({ visible, close }: Iprops) {
                             className="px-4 py-2 rounded bg-black w-full"
                             {...register("collaboratorId")} >
                             <option >Escolha o Colaborador</option>
-                            {collaborators!.map((colab) => (
-                                <option key={colab.id} value={colab.id}>
-                                    {colab.name}
+                            {collaborators?.map((colab) => (
+                                <option key={colab?.id} value={String(colab.id)}>
+                                    {colab?.name}
                                 </option>
                             ))}
 

@@ -55,7 +55,7 @@ export default function EditProjectModal({ visible, close, name, id }: Iprops) {
             setProjects(update.data)
             setIsLoading(false)
 
-        } catch (error) {
+        } catch (error: any) {
             setIsLoading(false)
             return setError("name", { type: "custom", message: error.response.data.error });
         }

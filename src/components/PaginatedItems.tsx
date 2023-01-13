@@ -3,19 +3,20 @@ import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useMyContext } from '../contexts/MyContext';
 
-function Items({ currentItems }) {
+function Items({ currentItems }: any) {
 
     const { filter, filterBy } = useMyContext()
 
-    function filterByTaskName(item) {
+    function filterByTaskName(item: any) {
         return item.name.toLowerCase().includes(filter.toLowerCase())
     }
 
-    function filterByProjectName(item) {
+    function filterByProjectName(item: any) {
         return item.project.name.toLowerCase().includes(filter.toLowerCase())
     }
 
-    function filterByCollaborator(item) {
+    function filterByCollaborator(item: any) {
+        {/* @ts-ignore */ }
         return item.TimeTracker.some(tracker => {
             if (tracker.collaborator) {
                 return tracker.collaborator.name.toLowerCase().includes(filter.toLowerCase());
@@ -28,13 +29,13 @@ function Items({ currentItems }) {
     function selectFilter() {
         switch (filterBy) {
             case 'task':
-                return currentItems.filter((item) => filterByTaskName(item))
+                return currentItems.filter((item: any) => filterByTaskName(item))
 
             case 'project':
-                return currentItems.filter((item) => filterByProjectName(item))
+                return currentItems.filter((item: any) => filterByProjectName(item))
 
             case 'collaborator':
-                return currentItems.filter((item) => filterByCollaborator(item))
+                return currentItems.filter((item: any) => filterByCollaborator(item))
             default:
                 break;
         }
@@ -59,12 +60,12 @@ function Items({ currentItems }) {
 
                     </tr>
                     {filtered &&
-                        filtered.map((item, index) => (
+                        filtered.map((item: any, index: any) => (
                             <tr key={index} className=' border-white '>
                                 <td className='px-4 text-xs'>{item.name}</td>
                                 <td className='px-4 text-xs'>{item.project.name}</td>
 
-                                {item.TimeTracker.map((item, index) =>
+                                {item.TimeTracker.map((item: any, index: any) =>
                                     !item.collaborator ?
                                         (<td key={index} className='px-4 text-xs flex text-center justify-center gap-2'></td>)
                                         :
@@ -79,15 +80,20 @@ function Items({ currentItems }) {
         </div>
     );
 }
+interface IperPage {
+    itemsPerPage: number,
+    items: any
+}
 
-export default function PaginatedItems({ itemsPerPage, items }) {
+
+export default function PaginatedItems({ itemsPerPage, items }: IperPage) {
     const [itemOffset, setItemOffset] = useState(0);
     const endOffset = itemOffset + itemsPerPage;
     const currentItems = items.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(items.length / itemsPerPage);
 
 
-    const handlePageClick = (event) => {
+    const handlePageClick = (event: any) => {
         const newOffset = (event.selected * itemsPerPage) % items.length;
         setItemOffset(newOffset);
     };
@@ -109,7 +115,3 @@ export default function PaginatedItems({ itemsPerPage, items }) {
         </>
     );
 }
-
-
-{/* <td className='px-4 text-xl'>{format(utcToZonedTime(item.inicio, 'America/Sao_Paulo'), 'HH:mm', { timeZone: 'America/Sao_Paulo' })}</td>
-<td className='px-4 text-xl'>{format(utcToZonedTime(item.fim, 'America/Sao_Paulo'), 'HH:mm', { timeZone: 'America/Sao_Paulo' })}</td> */}

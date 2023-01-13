@@ -31,7 +31,7 @@ export default function CreateTimetrackerModal({ visible, close, id }: Iprops) {
             interval = (new Date(data.endDate).getTime() - new Date(data.startDate).getTime()) / 60000;
             console.log(interval)
         }
-        const checkDay = await api.post('/daytotalminutes', { daySent: new Date(data.startDate) })
+        const checkDay = await api.post('/daytotalminutes', { daySent: new Date(String(data.startDate)) })
         const currentDayHours = checkDay.data
         try {
             console.log(currentDayHours)
@@ -129,7 +129,7 @@ export default function CreateTimetrackerModal({ visible, close, id }: Iprops) {
                             {...register("collaboratorId")} >
                             <option >Escolha o Colaborador</option>
                             {collaborators!.map((colab) => (
-                                <option key={colab.id} value={colab.id}>
+                                <option key={colab.id} value={String(colab.id)}>
                                     {colab.name}
                                 </option>
                             ))}

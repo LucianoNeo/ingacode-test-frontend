@@ -5,14 +5,14 @@ import ProjectCard from "./ProjectCard";
 
 interface Iprops {
     projects: [{
-        id: String
-        name: String
+        id: string
+        name: string
         Tasks: [{
-            id: String
-            name: String
+            id: string
+            name: string
             TimeTracker: [{
                 collaborator: {
-                    name: String
+                    name: string
                 }
                 startDate: Date
                 endDate: Date

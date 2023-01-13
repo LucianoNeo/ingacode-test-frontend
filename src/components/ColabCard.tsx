@@ -1,7 +1,7 @@
 import { IoMdAddCircle } from "react-icons/io"
 
 interface Iprops {
-    username: string
+    username: string | null
     tasks: number
 
 }

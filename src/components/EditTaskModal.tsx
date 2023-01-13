@@ -85,7 +85,7 @@ export default function EditTaskModal({ visible, close, name, id, projectId, des
             setMonthMinutes(updateProjects.data)
 
             setIsLoading(false)
-        } catch (error) {
+        } catch (error: any) {
             setIsLoading(false)
             return setError("endDate", { type: "custom", message: error.response.data.error });
         }

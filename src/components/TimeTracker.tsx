@@ -11,8 +11,8 @@ import DeleteTTModal from './DeleteTTModal'
 
 interface Iprops {
     collaborator?: { name: string; }
-    startDate?: String
-    endDate?: String
+    startDate?: string
+    endDate?: string
     id: string
     number: number
 }
@@ -48,7 +48,7 @@ function TimeTracker({ collaborator, endDate, startDate, id, number }: Iprops) {
         }
     }
 
-    async function endTT(start) {
+    async function endTT(start: string) {
         try {
             const now = new Date()
             const endDate = moment(now).toISOString();
@@ -86,7 +86,7 @@ function TimeTracker({ collaborator, endDate, startDate, id, number }: Iprops) {
                 </div>
                 <div className="flex justify-between items-center w-full mx-2">
                     <p>Início:</p>
-                    {startDate ? <p>{formatDate(startDate)}</p> :
+                    {startDate ? <p>{formatDate(String(startDate))}</p> :
                         <button
                             onClick={() => startTT()}
                             className="bg-orange-700 py-1 px-3 w-20 rounded">Iniciar</button>}
@@ -94,10 +94,10 @@ function TimeTracker({ collaborator, endDate, startDate, id, number }: Iprops) {
                 </div>
                 <div className="flex justify-between items-center w-full mx-2">
                     <p>Fim:</p>
-                    {endDate && <p>{formatDate(endDate)}</p>}
+                    {endDate && <p>{formatDate(String(endDate))}</p>}
                     {startDate && !endDate &&
                         <button
-                            onClick={() => endTT(startDate)}
+                            onClick={() => endTT(String(startDate))}
                             className='bg-red-700 py-1 px-1 w-20 rounded disabled:opacity-30'>Finalizar</button>
                     }
 

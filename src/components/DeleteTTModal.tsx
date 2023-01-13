@@ -7,7 +7,7 @@ interface Iprops {
 
     visible: boolean
     close: Function
-    id: string
+    id: String
 }
 
 export default function DeleteTTModal({ visible, close, id }: Iprops) {

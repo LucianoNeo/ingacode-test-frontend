@@ -7,9 +7,10 @@ import ColabCard from './ColabCard';
 function Collaborators() {
     const { collaborators, tasks } = useMyContext()
 
-    function countTasksByCollaborator(collab) {
+    function countTasksByCollaborator(collab: string) {
         let taskCounts = 0
-        tasks.forEach(task => {
+        tasks!.forEach(task => {
+            {/* @ts-ignore */ }
             task.TimeTracker.forEach(tracker => {
                 if (tracker.collaborator) {
                     if (tracker.collaborator.name === collab) {
@@ -31,7 +32,7 @@ function Collaborators() {
                 </div>
                 <div className='flex flex-col h-full w-full my-8'>
                     {collaborators!.map((collab) => (
-                        <ColabCard key={collab.id} username={collab.name} tasks={countTasksByCollaborator(collab.name)} />
+                        <ColabCard key={collab.id} username={collab.name} tasks={countTasksByCollaborator(String(collab.name))} />
                     ))}
 
                 </div>

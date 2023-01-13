@@ -5,14 +5,24 @@ import CreateTimetrackerModal from './CreateTimetrackerModal'
 import DeleteTaskModal from './DeleteTaskModal'
 import EditTaskModal from './EditTaskModal'
 import TimeTracker from "./TimeTracker"
+
+
 interface Iprops {
     name: string
     id: string
     description: string
-    project: string
+    project: String
     projectId: string
-    collaborator?: string
-    timetrackers: [{ collaborator: { name: string; }; startDate: String; endDate: String; id: String }]
+    collaborator?: String
+    timetrackers: [{
+        collaborator: {
+            id: string,
+            name: string;
+        };
+        startDate: string;
+        endDate: string;
+        id: string
+    }]
 
 }
 

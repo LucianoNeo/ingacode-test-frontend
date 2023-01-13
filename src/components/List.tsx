@@ -31,7 +31,7 @@ function List() {
                             <div className="flex flex-col md:flex-row text-left ml-6 md:items-center md:gap-4">
                                 <span>Filtrar por:</span>
                                 <select
-                                    className="px-4 py-2 rounded bg-[#111] w-24 h-8 text-[9px]"
+                                    className="px-4 py-2 rounded bg-[#111] w-24 h-8"
                                     onChange={(e) => setFilterBy(e.target.value)}>
                                     <option value='task'>Tarefa</option>
                                     <option value='project'>Projeto</option>
@@ -44,7 +44,7 @@ function List() {
                                 <input
                                     placeholder="Digite sua busca"
                                     type='text'
-                                    className="px-4 py-2 rounded bg-[#111] w-[30vw] h-8 placeholder:text-[9px]"
+                                    className="px-4 py-2 rounded bg-[#111] w-[30vw] h-8"
                                     onChange={(e) => setFilter(e.target.value)} />
 
                             </div>

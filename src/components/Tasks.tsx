@@ -14,9 +14,11 @@ interface Iprops {
         TimeTracker: [{
             collaborator: {
                 name: string
+                id: string
             }
-            startDate: Date
-            endDate: Date
+            startDate: string
+            endDate: string
+            id: string
         }]
     }]
 }

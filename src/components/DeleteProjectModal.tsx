@@ -5,8 +5,8 @@ interface Iprops {
 
     visible: boolean
     close: Function
-    name: string
-    id: string
+    name: String
+    id: String
 }
 
 
