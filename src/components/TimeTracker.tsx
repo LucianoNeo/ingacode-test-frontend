@@ -101,7 +101,7 @@ function TimeTracker({ collaborator, endDate, startDate, id, number }: Iprops) {
             <ToastContainer />
             <DeleteTTModal id={id} close={closeModal} visible={deleteTTVisible} />
             <AddCollab id={id} close={closeModal} visible={addCollabVisible} />
-            <div className="text-xs text-start bg-[#0C0B10] py-5 mt-2 rounded-xl gap-2 px-4 flex flex-col justify-between relative min-w-[200px] h-40 z-20">
+            <div className="text-xs text-start bg-[#0C0B10] py-5 mt-2 rounded-xl gap-2 px-4 flex flex-col justify-between relative min-w-[200px] h-40 ">
 
                 <button
                     onClick={() => setdeleteTTVisible(true)}

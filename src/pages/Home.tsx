@@ -85,6 +85,7 @@ function Home() {
             getCollaborators(),
           ]);
         }
+
         setIsLoading(false);
       } catch (err) {
         console.log(err);
