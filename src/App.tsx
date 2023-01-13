@@ -1,10 +1,21 @@
-import Home from "./pages/Home"
-import Login from "./pages/Login"
+import { MemoryRouter } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { Provider } from './contexts/MyContext';
+
+import Router from "./Router";
 
 function App() {
 
   return (
-    <Home />
+
+    <AuthProvider>
+      <Provider>
+        <MemoryRouter>
+          <Router />
+        </MemoryRouter>
+      </Provider>
+    </AuthProvider>
+
   )
 }
 

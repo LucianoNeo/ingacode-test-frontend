@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { AiOutlineClose, AiOutlineUser } from 'react-icons/ai';
 import { BiExit } from 'react-icons/bi';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import Logo from "../components/Logo";
+import { AuthContext } from "../contexts/AuthContext";
 
 interface Iprops {
-    username: string;
+    username: string | null;
     close: boolean,
     setClose: Function
 }
 
 function Header({ username, close, setClose }: Iprops) {
+
+    const { signOut } = useContext(AuthContext)
 
     return (
         <>
@@ -31,7 +34,9 @@ function Header({ username, close, setClose }: Iprops) {
                 <div className="flex items-start justify-start gap-2">
                     <AiOutlineUser size={26} />
                     <span className="text-lg">Olá, {username}!</span>
-                    <button className="text-red">
+                    <button
+                        onClick={signOut}
+                        className="text-red">
                         <BiExit size={26} />
                     </button>
                 </div>

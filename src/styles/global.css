@@ -10,6 +10,7 @@ body{
     color: white;
     background-color: #0C0B10;
     font-family: 'Poppins';
+    box-sizing: border-box;
 }
 
 *::-webkit-scrollbar {
@@ -29,3 +30,7 @@ body{
     border: 2px solid #DE8F45;
 
 }
+
+table tr:nth-child(2n) {
+    background-color: #111;
+  }
