@@ -1,5 +1,5 @@
 
-import { format, isAfter } from 'date-fns'
+import { format, isAfter, parseISO } from 'date-fns'
 import { useState } from 'react'
 import { AiFillDelete } from 'react-icons/ai'
 import { BiTime } from 'react-icons/bi'
@@ -54,36 +54,37 @@ function TimeTracker({ collaborator, endDate, startDate, id, number }: Iprops) {
 
     async function endTT(start: string) {
         try {
-            const now = new Date()
+            const now = new Date();
             const endDate = format(now, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
-            if (isAfter((Number(startDate)), now)) {
+            const startDate = parseISO(start);
+
+            if (isAfter(startDate, now)) {
                 return alert('isso nao eh possible!');
             } else {
+                setIsLoading(true);
+                const response = await api.put(`/timetrackers/${id}`, { endDate: endDate });
+                console.log(response.data);
 
-                setIsLoading(true)
-                const response = await api.put(`/timetrackers/${id}`, { endDate: endDate })
-                console.log(response.data)
+                const updateTasks = await api.get('/tasks');
+                setTasks(updateTasks.data);
 
-                const updateTasks = await api.get('/tasks')
-                setTasks(updateTasks.data)
+                const updateProjects = await api.get('/projects');
+                setProjects(updateProjects.data);
 
-                const updateProjects = await api.get('/projects')
-                setProjects(updateProjects.data)
+                const updateDayMinutes = await api.post('/daytotalminutes', { daySent: new Date() });
+                setDayMinutes(updateDayMinutes.data);
 
-                const updateDayMinutes = await api.post('/daytotalminutes', { daySent: new Date() })
-                setDayMinutes(updateDayMinutes.data)
-
-                const updateMonthMinutes = await api.get('/monthtotalminutes')
-                setMonthMinutes(updateMonthMinutes.data)
+                const updateMonthMinutes = await api.get('/monthtotalminutes');
+                setMonthMinutes(updateMonthMinutes.data);
 
                 if (updateTasks.data) {
-                    setIsLoading(false)
+                    setIsLoading(false);
                     close();
                 }
             }
         } catch (error) {
             console.log(error);
-            setIsLoading(false)
+            setIsLoading(false);
         }
     }
 
