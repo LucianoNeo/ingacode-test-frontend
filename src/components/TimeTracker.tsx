@@ -1,4 +1,5 @@
 
+import { format, isAfter } from 'date-fns'
 import { useState } from 'react'
 import { AiFillDelete } from 'react-icons/ai'
 import { BiTime } from 'react-icons/bi'
@@ -8,7 +9,6 @@ import { api } from '../services/Api'
 import { formatDate } from '../tools/formatDate'
 import AddCollab from './AddCollab'
 import DeleteTTModal from './DeleteTTModal'
-import { format, parseISO, isBefore, isAfter } from 'date-fns';
 
 
 
@@ -56,7 +56,7 @@ function TimeTracker({ collaborator, endDate, startDate, id, number }: Iprops) {
         try {
             const now = new Date()
             const endDate = format(now, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
-            if (isAfter((String(startDate)), now)) {
+            if (isAfter((Number(startDate)), now)) {
                 return alert('isso nao eh possible!');
             } else {
 
