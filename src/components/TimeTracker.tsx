@@ -1,4 +1,4 @@
-import * as moment_ from 'moment'
+
 import { useState } from 'react'
 import { AiFillDelete } from 'react-icons/ai'
 import { BiTime } from 'react-icons/bi'
@@ -8,8 +8,9 @@ import { api } from '../services/Api'
 import { formatDate } from '../tools/formatDate'
 import AddCollab from './AddCollab'
 import DeleteTTModal from './DeleteTTModal'
+import { format, parseISO, isBefore, isAfter } from 'date-fns';
 
-const moment: any = moment_;
+
 
 
 interface Iprops {
@@ -37,7 +38,7 @@ function TimeTracker({ collaborator, endDate, startDate, id, number }: Iprops) {
         try {
 
             const now = new Date()
-            const startDate = moment(now).toISOString();
+            const startDate = format(now, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
             setIsLoading(true)
             const response = await api.put(`/timetrackers/${id}`, { startDate: startDate })
             console.log(response.data)
@@ -54,9 +55,9 @@ function TimeTracker({ collaborator, endDate, startDate, id, number }: Iprops) {
     async function endTT(start: string) {
         try {
             const now = new Date()
-            const endDate = moment(now).toISOString();
-            if (moment(start).isAfter(endDate)) {
-                return alert('isso nao eh possible!')
+            const endDate = format(now, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+            if (isAfter((String(startDate)), now)) {
+                return alert('isso nao eh possible!');
             } else {
 
                 setIsLoading(true)
