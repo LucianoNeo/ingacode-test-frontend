@@ -2,12 +2,5 @@
     "version": 2,
     "env": {
     "TS_NODE_IGNORE_WARNINGS": "1"
-    },
-    "builds": [
-    { "src": "vite.config.ts", "use": "@vercel/vite" },
-    { "src": "src/**/.ts", "use": "@vercel/node" }
-    ],
-    "routes": [
-    { "src": "/(.)", "dest": "/src/server.ts" }
-    ]
+    }    
     }
