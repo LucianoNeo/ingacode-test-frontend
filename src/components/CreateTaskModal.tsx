@@ -1,9 +1,10 @@
 import { Resolver, useForm, Controller } from 'react-hook-form';
 import { api } from '../services/Api';
-import * as moment from "moment";
 import { useMyContext } from '../contexts/MyContext';
 import { BiTask } from 'react-icons/bi';
+import * as moment_ from 'moment';
 
+const moment = moment_;
 
 interface FormData {
     name: string;

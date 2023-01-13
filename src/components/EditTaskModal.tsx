@@ -1,9 +1,7 @@
 import { Resolver, useForm, Controller } from 'react-hook-form';
 import { api } from '../services/Api';
-import * as moment from "moment";
 import { useMyContext } from '../contexts/MyContext';
 import { BiEdit } from 'react-icons/bi';
-
 
 interface FormData {
     name: string;

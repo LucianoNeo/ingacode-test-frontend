@@ -1,13 +1,16 @@
-import moment from 'moment'
+import * as moment_ from 'moment'
 import { useState } from 'react'
 import { AiFillDelete } from 'react-icons/ai'
-import { BiEdit, BiTask, BiTime } from 'react-icons/bi'
+import { BiTime } from 'react-icons/bi'
 import { IoMdAddCircle } from 'react-icons/io'
 import { useMyContext } from '../contexts/MyContext'
 import { api } from '../services/Api'
 import { formatDate } from '../tools/formatDate'
 import AddCollab from './AddCollab'
 import DeleteTTModal from './DeleteTTModal'
+
+const moment = moment_;
+
 
 interface Iprops {
     collaborator?: { name: string; }
