@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useMyContext } from "../contexts/MyContext";
 import CreateProjectModal from "./CreateProjectModal";
 import ProjectCard from "./ProjectCard";
 
@@ -42,7 +41,7 @@ function Projects({ projects }: Iprops) {
                 <div className="flex bg-gradient-to-r from-orange-400 to-orange-600 px-4 py-2 rounded-t-xl justify-end items-start pt-2">
                     <h1 className="text-xl md:text-3xl font-extrabold">PROJETOS</h1>
                 </div>
-                <div className="flex flex-row overflow-auto items-start justify-start overflow-y-hidden p-4 gap-4 h-[66vh]">
+                <div className="flex flex-row overflow-auto items-start justify-start overflow-y-hidden py-4 pr-24 gap-4 h-[66vh]">
                     {projects.map((project, index) => (
                         <ProjectCard key={index} id={project.id} name={project.name} tasks={project.Tasks} />
                     )

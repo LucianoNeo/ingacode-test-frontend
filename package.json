@@ -1,7 +1,7 @@
 {
   "name": "ingacode-test-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "start": "npx http-server ./dist",
@@ -23,6 +23,7 @@
     "react-paginate": "^8.1.4",
     "react-router-dom": "^6.6.2",
     "react-spinners": "^0.13.7",
+    "react-toastify": "^9.1.1",
     "ts-node": "^10.9.1"
   },
   "devDependencies": {

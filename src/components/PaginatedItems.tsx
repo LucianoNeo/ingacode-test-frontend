@@ -51,7 +51,7 @@ function Items({ currentItems }: any) {
 
         <div className='overflow-x-auto w-full text-center justify-center items-center my-4'        >
 
-            <table className='text-white bg-[#1E293B] text-xs text-center self-center w-full'>
+            <table className='text-white bg-[#1E293B] text-xs  md:text-sm text-center self-center w-full'>
                 <tbody>
                     <tr className='w-full px-1'>
                         <th className='text-[10px] md:text-sm  md:p-4 border-[1px] truncate'>Tarefa</th>
@@ -62,14 +62,14 @@ function Items({ currentItems }: any) {
                     {filtered &&
                         filtered.map((item: any, index: any) => (
                             <tr key={index} className=' border-white '>
-                                <td className='px-4 text-xs'>{item.name}</td>
-                                <td className='px-4 text-xs'>{item.project.name}</td>
+                                <td className='px-4 text-xs md:text-sm'>{item.name}</td>
+                                <td className='px-4 text-xs md:text-sm'>{item.project.name}</td>
 
                                 {item.TimeTracker.map((item: any, index: any) =>
                                     !item.collaborator ?
-                                        (<td key={index} className='px-4 text-xs flex text-center justify-center gap-2'></td>)
+                                        (<td key={index} className='px-4 text-xs  md:text-sm flex text-center justify-center gap-2'></td>)
                                         :
-                                        (<td key={index} className='text-xs flex text- justify-center gap-2'>{item.collaborator.name}</td>)
+                                        (<td key={index} className='text-xs md:text-sm flex text- justify-center gap-2'>{item.collaborator.name}</td>)
                                 )}
 
 
@@ -104,7 +104,7 @@ export default function PaginatedItems({ itemsPerPage, items }: IperPage) {
             <ReactPaginate
                 breakLabel="..."
                 nextLabel="Próximo >"
-                className='text-xs text-center flex gap-2 m-auto'
+                className='text-xs text-center flex gap-2 m-auto  md:text-sm'
                 onPageChange={handlePageClick}
                 pageRangeDisplayed={5}
                 pageCount={pageCount}

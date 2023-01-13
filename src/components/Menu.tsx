@@ -14,7 +14,7 @@ interface Iprops {
 function Menu({ open, setPage, setClose }: Iprops) {
 
     return (
-        <nav className={`flex flex-col w-52 h-72 font-bold bg-orange-500 rounded-sm px-1  absolute transition-all z-50 overflow-y-hidden
+        <nav className={`flex flex-col w-52 h-80 font-bold bg-orange-500 rounded-sm px-1  absolute transition-all z-50 overflow-y-hidden
         ${open ? 'left-0' : 'left-[-170px]'}`}>
             <ul className='flex flex-col gap-4 py-4 overflow-hidden p-1'>
                 <li
@@ -68,13 +68,17 @@ function Menu({ open, setPage, setClose }: Iprops) {
 
                 </li>
 
-                <li className='flex gap-4 hover:text-gray-900 text-left justify-end cursor-pointer text-xs mt-4'>
+                <li className='flex gap-4 hover:text-gray-900 text-left justify-end cursor-pointer text-xs mt-4 flex-col'>
                     <a href="http://github.com/LucianoNeo" target='_blank'>
                         <div className='flex justify-between'>
-                            Desenvolvido por LucianoNeo <BsGithub size={26} />
+                            <div className='flex flex-col'>
+                                <span>Desenvolvido por LucianoNeo</span>
+                            </div>
+                            <BsGithub size={26} />
                         </div>
-
                     </a>
+                    <p className='text-center mt-2'>Versão 1.0.0 </p>
+
 
 
                 </li>

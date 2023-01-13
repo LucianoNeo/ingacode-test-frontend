@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { AiFillDelete } from 'react-icons/ai'
 import { BiTime } from 'react-icons/bi'
 import { IoMdAddCircle } from 'react-icons/io'
+import { ToastContainer } from 'react-toastify'
 import { useMyContext } from '../contexts/MyContext'
 import { api } from '../services/Api'
 import { formatDate } from '../tools/formatDate'
@@ -27,7 +28,7 @@ function TimeTracker({ collaborator, endDate, startDate, id, number }: Iprops) {
     const [deleteTTVisible, setdeleteTTVisible] = useState(false)
     const [addCollabVisible, setaddCollabVisible] = useState(false)
 
-    const { setTasks, setProjects, setIsLoading, setDayMinutes, setMonthMinutes } = useMyContext()
+    const { setTasks, setProjects, setIsLoading, setDayMinutes, setMonthMinutes, SuccessToast, ErrorToast } = useMyContext()
 
     function closeModal() {
         setdeleteTTVisible(false)
@@ -36,19 +37,22 @@ function TimeTracker({ collaborator, endDate, startDate, id, number }: Iprops) {
 
     async function startTT() {
         try {
-
             const now = new Date()
             const startDate = format(now, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
             setIsLoading(true)
             const response = await api.put(`/timetrackers/${id}`, { startDate: startDate })
-            console.log(response.data)
-            const update = await api.get('/tasks')
-            setTasks(update.data)
-            setIsLoading(false)
+            if (response.data) {
+                const update = await api.get('/tasks')
+                setTasks(update.data)
+                setIsLoading(false)
+                SuccessToast('Timetracker iniciado com sucesso!')
+            } else {
+                ErrorToast(response.data.error)
+            }
 
         } catch (error) {
-            console.log(error);
             setIsLoading(false)
+            ErrorToast(error)
         }
     }
 
@@ -59,39 +63,45 @@ function TimeTracker({ collaborator, endDate, startDate, id, number }: Iprops) {
             const startDate = parseISO(start);
 
             if (isAfter(startDate, now)) {
-                return alert('isso nao eh possible!');
+                ErrorToast('Não é possível finalizar o timetracker antes do início!')
             } else {
                 setIsLoading(true);
                 const response = await api.put(`/timetrackers/${id}`, { endDate: endDate });
-                console.log(response.data);
+                if (response.data) {
+                    const updateTasks = await api.get('/tasks');
+                    setTasks(updateTasks.data);
 
-                const updateTasks = await api.get('/tasks');
-                setTasks(updateTasks.data);
+                    const updateProjects = await api.get('/projects');
+                    setProjects(updateProjects.data);
 
-                const updateProjects = await api.get('/projects');
-                setProjects(updateProjects.data);
+                    const updateDayMinutes = await api.post('/daytotalminutes', { daySent: new Date() });
+                    setDayMinutes(updateDayMinutes.data);
 
-                const updateDayMinutes = await api.post('/daytotalminutes', { daySent: new Date() });
-                setDayMinutes(updateDayMinutes.data);
+                    const updateMonthMinutes = await api.get('/monthtotalminutes');
+                    setMonthMinutes(updateMonthMinutes.data);
 
-                const updateMonthMinutes = await api.get('/monthtotalminutes');
-                setMonthMinutes(updateMonthMinutes.data);
-
-                if (updateTasks.data) {
-                    setIsLoading(false);
+                    if (updateTasks.data) {
+                        setIsLoading(false);
+                        SuccessToast('Timetracker finalizado com sucesso!')
+                    }
+                } else {
+                    ErrorToast(response.data.error)
                 }
+
             }
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
+            ErrorToast(error)
         }
     }
 
 
     return (
         <>
-
-            <div className="text-xs text-start bg-[#0C0B10] py-5 mt-2 rounded-xl gap-2 px-4 flex flex-col justify-between relative min-w-[200px] h-40">
+            <ToastContainer />
+            <DeleteTTModal id={id} close={closeModal} visible={deleteTTVisible} />
+            <AddCollab id={id} close={closeModal} visible={addCollabVisible} />
+            <div className="text-xs text-start bg-[#0C0B10] py-5 mt-2 rounded-xl gap-2 px-4 flex flex-col justify-between relative min-w-[200px] h-40 z-20">
 
                 <button
                     onClick={() => setdeleteTTVisible(true)}
@@ -134,8 +144,7 @@ function TimeTracker({ collaborator, endDate, startDate, id, number }: Iprops) {
                     }
                 </div>
             </div>
-            <DeleteTTModal id={id} close={closeModal} visible={deleteTTVisible} />
-            <AddCollab id={id} close={closeModal} visible={addCollabVisible} />
+
         </>
     )
 }

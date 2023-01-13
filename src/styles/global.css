@@ -3,8 +3,14 @@
 @tailwind utilities;
 
 
+:root {
     
-
+    --toastify-color-success: #ff9130;
+    --toastify-color-error: #e74c3c;
+    --toastify-font-family: 'Poppins';
+    --toastify-toast-min-height: 84px;
+    --toastify-color-dark: #0C0B10;
+}
 
 body{
     color: white;
@@ -34,3 +40,4 @@ body{
 table tr:nth-child(2n) {
     background-color: #111;
   }
+

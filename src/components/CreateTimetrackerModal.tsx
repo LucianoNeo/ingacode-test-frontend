@@ -4,6 +4,7 @@ import { useMyContext } from '../contexts/MyContext';
 import { api } from '../services/Api';
 
 import { format, parseISO, isBefore, isAfter } from 'date-fns';
+import { toast } from 'react-toastify';
 
 
 
@@ -24,7 +25,7 @@ interface Iprops {
 
 export default function CreateTimetrackerModal({ visible, close, id }: Iprops) {
     const { setError, register, handleSubmit, reset, formState: { errors } } = useForm<FormData>();
-    const { setProjects, setTasks, setIsLoading, collaborators, setDayMinutes, setMonthMinutes } = useMyContext()
+    const { setProjects, setTasks, setIsLoading, collaborators, setDayMinutes, setMonthMinutes, SuccessToast, ErrorToast } = useMyContext()
 
 
     async function createTimetracker(data: FormData) {
@@ -52,24 +53,28 @@ export default function CreateTimetrackerModal({ visible, close, id }: Iprops) {
             } else {
                 setIsLoading(true)
                 const response = await api.post(`/timetrackers`, data)
-                console.log(response.data)
+                if (response.data) {
+                    const updateTasks = await api.get('/tasks')
+                    setTasks(updateTasks.data)
 
-                const updateTasks = await api.get('/tasks')
-                setTasks(updateTasks.data)
+                    const updateProjects = await api.get('/projects')
+                    setProjects(updateProjects.data)
 
-                const updateProjects = await api.get('/projects')
-                setProjects(updateProjects.data)
+                    const updateDayMinutes = await api.post('/daytotalminutes', { daySent: new Date() })
+                    setDayMinutes(updateDayMinutes.data)
 
-                const updateDayMinutes = await api.post('/daytotalminutes', { daySent: new Date() })
-                setDayMinutes(updateDayMinutes.data)
+                    const updateMonthMinutes = await api.get('/monthtotalminutes')
+                    setMonthMinutes(updateMonthMinutes.data)
 
-                const updateMonthMinutes = await api.get('/monthtotalminutes')
-                setMonthMinutes(updateMonthMinutes.data)
-
-                if (updateTasks.data) {
-                    setIsLoading(false)
-                    close();
-                    resetFields()
+                    if (updateTasks.data) {
+                        setIsLoading(false)
+                        close();
+                        resetFields()
+                    }
+                    SuccessToast('Timetracker adicionado com sucesso!')
+                }
+                else {
+                    ErrorToast(response.data.error)
                 }
             }
         } catch (error: any) {

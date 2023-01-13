@@ -2,6 +2,8 @@ import { Resolver, useForm, Controller } from 'react-hook-form';
 import { api } from '../services/Api';
 import { useMyContext } from '../contexts/MyContext';
 import { BiEdit } from 'react-icons/bi';
+import { ErrorResponse } from '@remix-run/router';
+import { ToastContainer } from 'react-toastify';
 
 interface FormData {
     name: string;
@@ -61,31 +63,35 @@ export default function EditTaskModal({ visible, close, name, id, projectId, des
         }
     });
 
-    const { setProjects, projects, setTasks, setIsLoading, setDayMinutes, dayMinutes, setMonthMinutes } = useMyContext()
+    const { setProjects, projects, setTasks, setIsLoading, setDayMinutes, setMonthMinutes, SuccessToast, ErrorToast } = useMyContext()
 
     async function editTask(data: FormData, id: string) {
 
         try {
             setIsLoading(true)
             const response = await api.put(`/tasks/${id}`, data)
-            console.log(response.data)
+            if (response.data) {
+                const updateTasks = await api.get('/tasks')
+                setTasks(updateTasks.data)
 
-            const updateTasks = await api.get('/tasks')
-            setTasks(updateTasks.data)
+                const updateProjects = await api.get('/projects')
+                setProjects(updateProjects.data)
 
-            const updateProjects = await api.get('/projects')
-            setProjects(updateProjects.data)
+                const updateDayMinutes = await api.post('/daytotalminutes', { daySent: new Date() })
+                setDayMinutes(updateDayMinutes.data)
 
-            const updateDayMinutes = await api.post('/daytotalminutes', { daySent: new Date() })
-            setDayMinutes(updateDayMinutes.data)
+                const updateMonthMinutes = await api.get('/monthtotalminutes')
+                setMonthMinutes(updateMonthMinutes.data)
 
-            const updateMonthMinutes = await api.get('/monthtotalminutes')
-            setMonthMinutes(updateMonthMinutes.data)
-
-            if (updateTasks.data) {
-                setIsLoading(false)
-                close();
+                if (updateTasks.data) {
+                    setIsLoading(false)
+                    close();
+                    SuccessToast('Tarefa editada com sucesso!')
+                } else {
+                    ErrorToast(response.data.error)
+                }
             }
+
         } catch (error: any) {
             setIsLoading(false)
             return setError("endDate", { type: "custom", message: error.response.data.error });
@@ -106,65 +112,68 @@ export default function EditTaskModal({ visible, close, name, id, projectId, des
         }
     };
     return (
-        <div className={`${!visible && 'hidden'} w-screen h-screen bg-black bg-opacity-80 backdrop:blur-3xl flex items-center justify-center z-50 absolute top-0 left-0`}>
-            <div className="bg-slate-900 w-[90vw] md:w-[30vw] px-8 py-4 rounded-md justify-between flex flex-col">
-                <form
-                    className='w-full items-center justify-center text-left'
-                    onSubmit={handleSubmit(onSubmit)}>
-                    <div className='flex w-full justify-between'>
-                        <BiEdit size={24} />
-                        <p className='text-lg font-extrabold'>Editar Tarefa:</p>
+        <>
+            <ToastContainer />
+            <div className={`${!visible && 'hidden'} w-screen h-screen bg-black bg-opacity-80 backdrop:blur-3xl flex items-center justify-center z-50 absolute top-0 left-0`}>
+                <div className="bg-slate-900 w-[90vw] md:w-[30vw] px-8 py-4 rounded-md justify-between flex flex-col">
+                    <form
+                        className='w-full items-center justify-center text-left'
+                        onSubmit={handleSubmit(onSubmit)}>
+                        <div className='flex w-full justify-between'>
+                            <BiEdit size={24} />
+                            <p className='text-lg font-extrabold'>Editar Tarefa:</p>
 
-                    </div>
-                    <label>
-                        Nome:
-                        <input
-                            className="px-4 py-2 rounded bg-black w-full"
-                            {...register("name")} placeholder="Nome da Tarefa" />
-                        {errors?.name && <p className='text-red-700 text-center font-bold '>{errors.name.message}</p>}
-                    </label>
+                        </div>
+                        <label>
+                            Nome:
+                            <input
+                                className="px-4 py-2 rounded bg-black w-full"
+                                {...register("name")} placeholder="Nome da Tarefa" />
+                            {errors?.name && <p className='text-red-700 text-center font-bold '>{errors.name.message}</p>}
+                        </label>
 
-                    <label>
-                        Descrição:
-                        <textarea
-                            className="px-4 py-2 rounded bg-black w-full resize-none"
-                            {...register("description")} placeholder="Descrição da Tarefa" />
-                    </label>
+                        <label>
+                            Descrição:
+                            <textarea
+                                className="px-4 py-2 rounded bg-black w-full resize-none"
+                                {...register("description")} placeholder="Descrição da Tarefa" />
+                        </label>
 
-                    <label>
-                        Selecione um projeto:
-                        <select
-                            className="px-4 py-2 rounded bg-black w-full"
-                            {...register("projectId")} >
-                            <option disabled>Escolha o Projeto</option>
-                            {projects!.map((project: any) => (
-                                <option key={project.id} value={project.id}>
-                                    {project.name}
-                                </option>
-                            ))}
+                        <label>
+                            Selecione um projeto:
+                            <select
+                                className="px-4 py-2 rounded bg-black w-full"
+                                {...register("projectId")} >
+                                <option disabled>Escolha o Projeto</option>
+                                {projects!.map((project: any) => (
+                                    <option key={project.id} value={project.id}>
+                                        {project.name}
+                                    </option>
+                                ))}
 
-                        </select>
-                        {errors?.projectId && <p className='text-red-700 text-center font-bold '>{errors.projectId.message}</p>}
+                            </select>
+                            {errors?.projectId && <p className='text-red-700 text-center font-bold '>{errors.projectId.message}</p>}
 
-                    </label>
+                        </label>
 
-                    <div className='flex items-center justify-center p-4 gap-2 mt-2'>
-                        <button type='submit' className="bg-orange-600 px-4 w-22 flex justify-center rounded hover:opacity-80">
-                            CONFIRMAR
-                        </button>
-                        <button
-                            type='button'
-                            onClick={() => {
-                                close()
-                            }
-                            }
-                            className="bg-red-600 px-2 max-w-22 flex justify-center rounded hover:opacity-80">
-                            CANCELAR
-                        </button>
+                        <div className='flex items-center justify-center p-4 gap-2 mt-2'>
+                            <button type='submit' className="bg-orange-600 px-4 w-22 flex justify-center rounded hover:opacity-80">
+                                CONFIRMAR
+                            </button>
+                            <button
+                                type='button'
+                                onClick={() => {
+                                    close()
+                                }
+                                }
+                                className="bg-red-600 px-2 max-w-22 flex justify-center rounded hover:opacity-80">
+                                CANCELAR
+                            </button>
 
-                    </div>
-                </form>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
+        </>
     );
 }

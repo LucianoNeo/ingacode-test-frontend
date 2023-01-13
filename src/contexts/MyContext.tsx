@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 
 interface User {
@@ -36,6 +37,8 @@ interface ContextData {
     setDayMinutes: Function
     monthMinutes: String | null
     setMonthMinutes: Function
+    SuccessToast: Function
+    ErrorToast: Function
 
 }
 
@@ -53,9 +56,37 @@ export const Provider = ({ children }: { children: JSX.Element }) => {
     const [filterBy, setFilterBy] = useState('task')
     const [dayMinutes, setDayMinutes] = useState(null)
     const [monthMinutes, setMonthMinutes] = useState(null)
+    const SuccessToast = (message: string) => {
+        toast.success(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    }
+
+    const ErrorToast = (message: string) => {
+        toast.error(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    }
+
+
+
     return (
         <Context.Provider
-            value={{ setUser, user, token, setToken, projects, setProjects, tasks, setTasks, isLoading, setIsLoading, collaborators, setCollaborators, filter, setFilter, filterBy, setFilterBy, dayMinutes, setDayMinutes, monthMinutes, setMonthMinutes }}
+            value={{ setUser, user, token, setToken, projects, setProjects, tasks, setTasks, isLoading, setIsLoading, collaborators, setCollaborators, filter, setFilter, filterBy, setFilterBy, dayMinutes, setDayMinutes, monthMinutes, setMonthMinutes, SuccessToast, ErrorToast }}
         >
             {children}
         </Context.Provider>
