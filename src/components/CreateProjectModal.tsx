@@ -62,10 +62,10 @@ export default function CreateProjectModal({ visible, close }: Iprops) {
 
     const onSubmit = (data: FormData) => {
         createProject(data)
-
         close();
-
     };
+
+
     return (
         <div className={`${!visible && 'hidden'} w-screen h-screen bg-black bg-opacity-80 backdrop:blur-3xl flex items-center justify-center z-50 absolute top-0 left-0`}>
             <div className="bg-slate-900 w-64 p-4 rounded-md justify-between flex flex-col">

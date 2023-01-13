@@ -79,40 +79,38 @@ export default function CreateTimetrackerModal({ visible, close, id }: Iprops) {
     }
 
     const onSubmit = (data: FormData) => {
-        try {
-            const currentDate = new Date()
-            data.taskId = id
-            const parsedstartDate = moment(data.startDate, "YYYY-MM-DD HH:mm:ss").toDate();
-            const parsedendDate = moment(data.endDate, "YYYY-MM-DD HH:mm:ss").toDate();
-            const parsedCurrentDate = moment(currentDate).format("YYYY-MM-DD HH:mm:ss")
-            const now = moment(parsedCurrentDate, "YYYY-MM-DD HH:mm:ss").toDate();
 
-            if (parsedstartDate.getTime() > parsedendDate.getTime()) {
-                return setError("startDate", { type: "custom", message: 'O início da tarefa deve ser MENOR que o Fim' });
-            }
+        const currentDate = new Date()
+        data.taskId = id
+        const parsedstartDate = moment(data.startDate, "YYYY-MM-DD HH:mm:ss").toDate();
+        const parsedendDate = moment(data.endDate, "YYYY-MM-DD HH:mm:ss").toDate();
+        const parsedCurrentDate = moment(currentDate).format("YYYY-MM-DD HH:mm:ss")
+        const now = moment(parsedCurrentDate, "YYYY-MM-DD HH:mm:ss").toDate();
 
-            if (parsedstartDate < now) {
-                return setError("startDate", { type: "custom", message: 'Inicio não pode ser menor que a data atual!' });
-            }
-            if (data.startDate === "") {
-                data.startDate = undefined;
-            } else {
-                data.startDate = moment(data.startDate).toISOString();
-            }
-            if (data.endDate === "") {
-                data.endDate = undefined;
-            } else {
-                data.endDate = moment(data.endDate).toISOString();
-            }
-            if (data.collaboratorId === "Escolha o Colaborador") {
-                data.collaboratorId = null;
-            }
-
-            createTimetracker(data)
-
-        } catch (error) {
-            alert(error)
+        if (parsedstartDate.getTime() > parsedendDate.getTime()) {
+            return setError("startDate", { type: "custom", message: 'O início da tarefa deve ser MENOR que o Fim' });
         }
+
+        if (parsedstartDate < now) {
+            return setError("startDate", { type: "custom", message: 'Inicio não pode ser menor que a data atual!' });
+        }
+        if (data.startDate === "") {
+            data.startDate = undefined;
+        } else {
+            data.startDate = moment(data.startDate).toISOString();
+        }
+        if (data.endDate === "") {
+            data.endDate = undefined;
+        } else {
+            data.endDate = moment(data.endDate).toISOString();
+        }
+        if (data.collaboratorId === "Escolha o Colaborador") {
+            data.collaboratorId = null;
+        }
+
+        createTimetracker(data)
+
+
     };
     return (
         <div className={`${!visible && 'hidden'} w-screen h-screen bg-black bg-opacity-80 backdrop:blur-3xl flex items-center justify-center z-50 absolute top-0 left-0`}>
