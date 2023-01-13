@@ -64,7 +64,7 @@ export default function EditTaskModal({ visible, close, name, id, projectId, des
     const { setProjects, projects, setTasks, setIsLoading, setDayMinutes, dayMinutes, setMonthMinutes } = useMyContext()
 
     async function editTask(data: FormData, id: string) {
-        console.log(data)
+
         try {
             setIsLoading(true)
             const response = await api.put(`/tasks/${id}`, data)

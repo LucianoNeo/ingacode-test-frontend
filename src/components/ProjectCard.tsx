@@ -73,7 +73,7 @@ function ProjectCard({ name, tasks, id }: Iprops) {
                                         onClick={() => {
                                             setTask({ name: task.name, id: task.id })
                                             setdeletetaskVisible(true)
-                                            console.log(task.name + ' ' + task.id)
+
                                         }}
                                         className="hover:text-red-600">
                                         <AiFillDelete size={20} />

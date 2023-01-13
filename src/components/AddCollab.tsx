@@ -20,7 +20,7 @@ export default function AddCollab({ visible, close, id }: Iprops) {
     const { setTasks, setIsLoading, collaborators } = useMyContext()
 
     async function addCollab(data: FormData, id: string) {
-        console.log(data)
+
         try {
             if (!data.collaboratorId) {
                 return setError("collaboratorId", { type: "custom", message: 'Você deve selecionar um colaborador para continuar!' });

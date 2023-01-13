@@ -61,12 +61,12 @@ export default function CreateTaskModal({ visible, close }: Iprops) {
         let interval
         if (data.startDate && data.endDate) {
             interval = (new Date(data.endDate).getTime() - new Date(String(data.startDate)).getTime()) / 60000;
-            console.log(interval)
+
         }
         const checkDay = await api.post('/daytotalminutes', { daySent: new Date(String(data.startDate)) })
         const currentDayHours = checkDay.data
         try {
-            console.log(currentDayHours)
+
             let [hours, minutes] = currentDayHours.split(":");
             let total_minutes = parseInt(hours) * 60 + parseInt(minutes);
             if (total_minutes >= 1440) {

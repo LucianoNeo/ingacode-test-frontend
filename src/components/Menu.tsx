@@ -69,8 +69,13 @@ function Menu({ open, setPage, setClose }: Iprops) {
                 </li>
 
                 <li className='flex gap-4 hover:text-gray-900 text-left justify-end cursor-pointer text-xs mt-4'>
-                    <a href="http://github.com/LucianoNeo" target='_blank'>Desenvolvido por LucianoNeo</a>
-                    <BsGithub size={26} />
+                    <a href="http://github.com/LucianoNeo" target='_blank'>
+                        <div className='flex justify-between'>
+                            Desenvolvido por LucianoNeo <BsGithub size={26} />
+                        </div>
+
+                    </a>
+
 
                 </li>
 
