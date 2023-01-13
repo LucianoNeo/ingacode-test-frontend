@@ -79,7 +79,6 @@ function TimeTracker({ collaborator, endDate, startDate, id, number }: Iprops) {
 
                 if (updateTasks.data) {
                     setIsLoading(false);
-                    close();
                 }
             }
         } catch (error) {
