@@ -11,6 +11,7 @@ Este projeto foi desenvolvido para cumprir o desafio técnico proposto pela empr
 # Tecnologias utilizadas
 
 - Prisma
+- Prisma Client
 - Postgres
 - Javascript
 - NodeJS
@@ -24,6 +25,7 @@ Este projeto foi desenvolvido para cumprir o desafio técnico proposto pela empr
 - Axios
 - React router dom
 - React-icons
+- React Hook Form
 - React toastify
 - Tailwind CSS
 
