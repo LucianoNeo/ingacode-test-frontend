@@ -1,4 +1,5 @@
 <!-- Badges -->
+![Screenshot_28](https://user-images.githubusercontent.com/16579699/212440682-e8b5fa88-eaa5-4b2d-b5d5-36f9a78d36ef.png)
 
 
 <!-- Content -->
@@ -28,7 +29,7 @@ Este projeto foi desenvolvido para cumprir o desafio técnico proposto pela empr
 
 # Descrição
 
-O projeto diz respeito a trata-se de uma proposta full-stack de um sistema para organização de projetos e tarefas com apontamento de horas, no qual era necessário desenvolver a aplicação de ponta a ponta, ou seja:
+O projeto trata-se de uma proposta full-stack de um sistema para organização de projetos e tarefas com apontamento de horas, no qual era necessário desenvolver a aplicação de ponta a ponta, ou seja:
 - modelagem do banco de dados
 - desenvolvimento do back-end / API REST
 - desenvolvimento do front-end
@@ -64,6 +65,16 @@ O código fonte do front-end encontra-se neste repositório:
 A aplicação foi hospedada na VERCEL e pode ser visualizada neste link:
 
 [DEPLOY](https://neotasks.vercel.app/)
+##  Usuários para teste, previamente cadastrados:
+```
+luciano
+henrique
+erica
+```
+Senha
+```
+minhaSenha
+```
 
 # Equipe de Desenvolvimento
 
