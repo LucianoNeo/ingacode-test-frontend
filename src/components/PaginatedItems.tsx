@@ -1,11 +1,14 @@
-import { format, utcToZonedTime } from 'date-fns-tz';
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
+import { ClipLoader } from 'react-spinners';
 import { useMyContext } from '../contexts/MyContext';
+import { api } from '../services/Api';
 
 function Items({ currentItems }: any) {
-
     const { filter, filterBy } = useMyContext()
+    const [taskTime, setTaskTime] = useState(Array(currentItems.length).fill(""))
+    const [isLoading, setIsLoading] = useState(true)
+
 
     function filterByTaskName(item: any) {
         return item.name.toLowerCase().includes(filter.toLowerCase())
@@ -42,6 +45,35 @@ function Items({ currentItems }: any) {
 
     }
 
+    const getData = async (taskId: any) => {
+        const res = await api.get(`/tasktotalminutes/${taskId}`)
+        let totalHours = Math.floor(res.data / 60)
+        let totalMinutes = Math.floor(res.data % 60)
+        /* @ts-ignore*/
+        if (totalHours < 9) totalHours = (String('0' + totalHours))
+        /* @ts-ignore*/
+        if (totalMinutes < 9) totalMinutes = (String('0' + totalMinutes))
+        return totalHours + ':' + totalMinutes
+    }
+
+
+
+
+    useEffect(() => {
+        currentItems.forEach((item: any, index: number) => {
+            getData(item.id).then(res => {
+                setTaskTime(prevState => {
+                    const newState = [...prevState]
+                    newState[index] = res
+                    return newState
+                })
+            })
+            setTimeout(() => {
+                setIsLoading(false)
+            }, 500);
+        })
+    }, [currentItems])
+
 
 
     let filtered = selectFilter()
@@ -57,10 +89,12 @@ function Items({ currentItems }: any) {
                         <th className='text-[10px] md:text-sm  md:p-4 border-[1px] truncate'>Tarefa</th>
                         <th className='text-[10px] md:text-sm md:p-4 border-[1px] truncate'>Projeto</th>
                         <th className='text-[10px] md:text-sm  md:p-4 border-[1px] truncate'>Colaborador(es)</th>
+                        <th className='text-[10px] md:text-sm  md:p-4 border-[1px] truncate'>Tempo aportado</th>
 
                     </tr>
                     {filtered &&
                         filtered.map((item: any, index: any) => (
+
                             <tr key={index} className=' border-white '>
                                 <td className='px-4 text-xs md:text-sm'>{item.name}</td>
                                 <td className='px-4 text-xs md:text-sm'>{item.project.name}</td>
@@ -71,6 +105,11 @@ function Items({ currentItems }: any) {
                                         :
                                         (<td key={index} className='text-xs md:text-sm flex text- justify-center gap-2'>{item.collaborator.name}</td>)
                                 )}
+
+                                <td className='px-4 text-xs md:text-sm'>
+                                    {!isLoading ? taskTime[index]
+                                        :
+                                        <ClipLoader size={10} color="#e58b15" />}</td>
 
 
                             </tr>
