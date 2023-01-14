@@ -29,7 +29,7 @@ Este projeto foi desenvolvido para cumprir o desafio técnico proposto pela empr
 
 # Descrição
 
-O projeto diz respeito a trata-se de uma proposta full-stack de um sistema para organização de projetos e tarefas com apontamento de horas, no qual era necessário desenvolver a aplicação de ponta a ponta, ou seja:
+O projeto trata-se de uma proposta full-stack de um sistema para organização de projetos e tarefas com apontamento de horas, no qual era necessário desenvolver a aplicação de ponta a ponta, ou seja:
 - modelagem do banco de dados
 - desenvolvimento do back-end / API REST
 - desenvolvimento do front-end
