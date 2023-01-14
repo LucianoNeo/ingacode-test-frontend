@@ -39,7 +39,7 @@ function TaskCard({ name, project, description, timetrackers, id, projectId }: I
     }
 
     return (
-        <div className="flex flex-col flex-wrap p-4 mx-auto h-[84vh] gap-4">
+        <div className="flex flex-col flex-wrap p-1 px-4 mx-auto h-[84vh] gap-1">
             <DeleteTaskModal visible={deleteTaskVisible} close={closeModal} name={name} id={id} />
             <EditTaskModal visible={editTaskVisible} close={closeModal} name={name} id={id} description={description} projectId={projectId} />
             <CreateTimetrackerModal visible={createTTModalVisible} close={closeModal} id={id} />
@@ -60,7 +60,7 @@ function TaskCard({ name, project, description, timetrackers, id, projectId }: I
                     <div className='flex flex-col overflow-hidden'>
                         <div className="flex items-center justify-between mt-6">
                             <BiTask size={48} />
-                            <span className="font-extrabold uppercase text-xl text-start">{name}</span>
+                            <span className="font-extrabold uppercase text-xl text-end">{name}</span>
                         </div>
                         <div className='flex gap-1 text-start mt-4 text-xs '>
                             <p className='font-bold'>Projeto:</p>

@@ -51,7 +51,7 @@ function ProjectCard({ name, tasks, id }: Iprops) {
                     <div className='flex flex-col overflow-hidden w-[75vw] md:w-96 p-8 gap-4 relative'>
                         <div className="flex items-center justify-between relative">
                             <GoProject size={48} />
-                            <span className="font-extrabold uppercase text-xl text-start">{name}</span>
+                            <span className="font-extrabold uppercase text-xl text-end mt-2">{name}</span>
                             <button
                                 onClick={() => seteditModalVisible(true)}
                                 className="absolute right-10 top-[-15px] hover:text-orange-600">
@@ -64,10 +64,10 @@ function ProjectCard({ name, tasks, id }: Iprops) {
                             </button>
                         </div>
                         <span className="text-left">Tarefas:</span>
-                        <div className="flex justify-center flex-wrap gap-2 h-[65%] md:h-[75%] overflow-auto p-4 items-center ">
+                        <div className="flex justify-center flex-col gap-2 h-[65%] md:h-[75%] overflow-auto p-4">
 
                             {tasks.map((task, index) => (
-                                <div key={index} className="bg-orange-600 w-full items-center justify-between text-center text-xs px-4 py-1 rounded-md flex" >
+                                <div key={index} className="bg-orange-600 w-full items-center justify-between text-center text-xs px-4 py-1 rounded-md flex " >
                                     <p className="truncate">{task.name}</p>
                                     <button
                                         onClick={() => {
