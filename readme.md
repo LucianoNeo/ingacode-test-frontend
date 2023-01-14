@@ -65,6 +65,17 @@ O código fonte do front-end encontra-se neste repositório:
 A aplicação foi hospedada na VERCEL e pode ser visualizada neste link:
 
 [DEPLOY](https://neotasks.vercel.app/)
+##  Usuários para teste, previamente cadastrados:
+```
+
+luciano
+henrique
+erica
+```
+Senha
+```
+minhaSenha
+```
 
 # Equipe de Desenvolvimento
 
