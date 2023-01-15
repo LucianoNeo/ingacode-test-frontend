@@ -19,3 +19,14 @@ export function formatDate(dateStr: string) {
 
   return `${hours}:${minutes} ${day}-${month}-${year}`;
 }
+
+
+export function firstUppercase(word: any) {
+  word.split(" ");
+
+  word.map((myword: string) => {
+    return myword[0].toUpperCase() + myword.substring(1);
+  }).join(" ");
+
+
+}

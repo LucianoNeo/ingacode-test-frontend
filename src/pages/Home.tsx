@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 import Collaborators from "../components/Collaborators";
 import Dashboard from "../components/Dashboard";
 import Header from "../components/Header";
@@ -16,8 +17,8 @@ import { api } from "../services/Api";
 function Home() {
   const [close, setClose] = useState(false)
   const [page, setPage] = useState('dashboard')
-  const { setProjects, projects, setTasks, tasks, isLoading, setIsLoading, setCollaborators, dayMinutes, setDayMinutes, monthMinutes, setMonthMinutes } = useMyContext()
-  const { user, token } = useContext(AuthContext)
+  const { setProjects, projects, setTasks, tasks, setIsLoading, setCollaborators, dayMinutes, setDayMinutes, monthMinutes, setMonthMinutes, ErrorToast, SuccessToast } = useMyContext()
+  const { user, token, signOut } = useContext(AuthContext)
 
   async function getProjects() {
     try {
@@ -65,9 +66,18 @@ function Home() {
     }
   }
 
+  async function validateToken() {
+    try {
+      const response = await api.get('/validatetoken')
+    } catch (error) {
+      ErrorToast('Sessão expirada, realize o logon novamente!')
+      setTimeout(() => {
+        signOut()
+      }, 5000);
+    }
+  }
 
   useEffect(() => {
-
     async function fetchData() {
       try {
 
@@ -77,6 +87,7 @@ function Home() {
               "Authorization"
             ] = `Bearer ${token}`;
           }
+          validateToken()
           await Promise.all([
             getTasks(),
             getProjects(),
@@ -98,6 +109,7 @@ function Home() {
 
   return (
     <>
+      <ToastContainer />
       <div className="overflow-x-hidden overflow-y-hidden">
         <Loading />
         <Header close={close} setClose={setClose} username={user} />
