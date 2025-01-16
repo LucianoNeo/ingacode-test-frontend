@@ -69,9 +69,9 @@ A aplicação foi hospedada na VERCEL e pode ser visualizada neste link:
 [DEPLOY](https://neotasks.vercel.app/)
 ##  Usuários para teste, previamente cadastrados:
 ```
-luciano
-henrique
-erica
+Luciano
+Henrique
+Erica
 ```
 Senha
 ```
